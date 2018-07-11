@@ -1,0 +1,25 @@
+
+
+<md-toolbar class="md-hue-2">
+	<div class="md-toolbar-tools">
+		<h2 flex md-truncate>Magacin</h2>     
+	</div>
+</md-toolbar>
+
+<form name="magacinForm">
+	<div layout="row">
+		<md-input-container>
+			<label>Sifra</label>
+			<input type="text" required ng-model="sifraMagacina">
+		</md-input-container>
+		
+		<md-input-container>
+			<label>Naziv</label>
+			<input type="text" required ng-model="nazivMagacina">
+		</md-input-container>
+		
+		<div layout="column">
+			<md-button class="md-raised md-primary" ng-click="dodajMagacin()">Dodaj</md-button>
+		</div>
+	</div>
+</form>

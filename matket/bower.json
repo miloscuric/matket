@@ -1,0 +1,23 @@
+{
+  "name": "market",
+  "authors": [
+    "Name <email>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "git_hub_url",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "^1.6.4",
+    "angular": "angularjs#^1.6.4",
+    "angular-material": "^1.1.4"
+  }
+}

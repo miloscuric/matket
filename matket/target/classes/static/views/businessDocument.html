@@ -1,0 +1,208 @@
+<div layout="row">
+
+	<div layout="column" flex=25 layout-margin>
+
+		<md-input-container>
+			<label>Document number</label>
+    		<input ng-model="docNumber">
+		</md-input-container>
+	
+		<md-input-container>
+			<label>Date</label>
+    		<md-datepicker ng-model="date" md-placeholder="Enter date"></md-datepicker>
+		</md-input-container>
+		
+		<md-input-container>
+			<label>Delivery date</label>
+    		<md-datepicker ng-model="deliveryDate" md-placeholder="Enter date"></md-datepicker>
+		</md-input-container>
+		
+		<md-input-container>
+			<label>Booking date</label>
+    		<md-datepicker ng-model="bookingDate" md-placeholder="Enter date"></md-datepicker>
+		</md-input-container>
+		
+	</div>
+
+	<div layout="column" flex=25 layout-margin>
+
+		<md-input-container>
+			<label>Executor name</label>
+    		<input ng-model="exName">
+		</md-input-container>
+
+		<md-input-container>
+			<label>Executor address</label>
+    		<input ng-model="exAddress">
+		</md-input-container>
+	
+		<div layout="row">
+			<md-input-container>
+				<label>PIB</label>
+    			<input ng-model="exPIB" ng-pattern="/^[0-9]{10}$/">
+			</md-input-container>
+	
+			<md-input-container>
+				<label>CIN</label>
+    			<input ng-model="exCIN" ng-pattern="/^[0-9]{8}$/">
+			</md-input-container>
+		</div>
+	
+		<md-input-container>
+			<label>Executor account</label>
+    		<input ng-model="exAccount">
+		</md-input-container>
+		
+		<div layout="column">
+    		<md-select placeholder="Select existing executor" ng-model="user" md-on-open="loadUsers()" style="min-width: 200px;">
+      			<md-option ng-value="user" ng-repeat="user in users">{{user.name}}</md-option>
+    		</md-select>
+  		</div>
+		
+		
+	</div>
+
+	<div layout="column" flex=25 layout-margin>
+
+		<md-input-container>
+			<label>Buyer name</label>
+    		<input ng-model="buyName">
+		</md-input-container>
+
+		<md-input-container>
+			<label>Buyer address</label>
+    		<input ng-model="buyAddress">
+		</md-input-container>
+	
+		<div layout="row">
+			<md-input-container>
+				<label>PIB</label>
+    			<input ng-model="buyPIB">
+			</md-input-container>
+	
+			<md-input-container>
+				<label>CIN</label>
+    			<input ng-model="buyCIN">
+			</md-input-container>
+		</div>
+	
+		<md-input-container>
+			<label>Buyer account</label>
+    		<input ng-model="buyAccount">
+		</md-input-container>
+		
+	</div>
+	
+	
+	
+	
+	
+</div>
+
+<md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <h2 flex md-truncate>Items table</h2>
+        
+        <md-button class="md-icon-button" aria-label="Add new item" ng-click="addNewItem()">
+        <ng-md-icon icon="exposure_plus_1" style="fill: white" size="24"></ng-md-icon> 
+        </md-button>
+        
+        <md-button class="md-icon-button" aria-label="Remove item/s" ng-click="removeItems()">
+        <ng-md-icon icon="remove" style="fill: white" size="24"></ng-md-icon> 
+        </md-button>
+        
+      </div>
+</md-toolbar>
+
+
+<md-content>
+<md-table-container>
+  <table md-table md-row-select multiple ng-model="selected">
+    <thead md-head md-order="myOrder" >
+      <tr md-row>
+        <th md-column md-numeric><span>Num.</span></th>
+        <th md-column md-numeric md-order-by="id"><span>ID</span></th>
+        <th md-column>Name</th>
+        <th md-column>Unit of measure</th>
+        <th md-column md-numeric>Amount</th>
+        <th md-column md-numeric>Price per unit</th>
+        <th md-column md-numeric>Rebate (%)</th>
+        <th md-column md-numeric>Tax base</th>
+        <th md-column md-numeric>Tax rate</th>
+        <th md-column md-numeric>Amount of tax</th>
+        <th md-column md-numeric>Total</th>
+      </tr>
+    </thead>
+    <tbody md-body>
+      <tr md-row md-select="item" md-select-id="name" md-auto-select ng-repeat="item in items | orderBy: myOrder | limitTo: query.limit: (query.page - 1) * query.limit">
+        <td md-cell>{{$index+1}}</td>
+        <td md-cell>{{item.id}}</td>
+        <td md-cell>{{item.name}}</td>
+        <td md-cell>{{item.unitOfMeasure}}</td>
+        <td md-cell>{{item.amount}}</td>
+        <td md-cell>{{item.pricePerUnit}}</td>
+        <td md-cell>{{item.rebate}}</td>
+        <td md-cell>{{item.taxBase}}</td>
+      	<td md-cell>{{item.taxRate}}</td>
+      	<td md-cell>{{item.amountOfTax}}</td>
+      	<td md-cell>{{item.pricePerUnit*item.amount}}</td>      	
+      </tr>
+    </tbody>
+  </table>  
+</md-table-container>	
+<md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="8" md-page-select="options.pageSelector" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
+</md-content>
+
+	<md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <h2 flex md-truncate>Total cost</h2>
+      </div>
+    </md-toolbar>
+
+<div layout="row">
+
+	<div layout="column" flex=25 layout-margin>
+
+		<md-input-container>
+			<label>Contact person (Name and Surname)</label>
+    		<input ng-model="docNumber">
+		</md-input-container>
+		
+		
+	</div>
+
+
+	<div layout="column" flex=25 layout-margin>
+
+		<md-input-container>
+			<label>Vehicle ID</label>
+    		<input ng-model="docNumber">
+		</md-input-container>
+		
+		<md-input-container>
+			<label>Vehicle number</label>
+    		<input ng-model="docNumber">
+		</md-input-container>
+	
+		<md-input-container>
+			<label>Shipper</label>
+    		<input ng-model="docNumber">
+		</md-input-container>
+		
+		<md-input-container>
+			<label>Transportation cost</label>
+    		<input ng-model="docNumber">
+		</md-input-container>
+		
+	</div>
+	
+	
+	
+</div>
+
+	<md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <h2 flex md-truncate>Total transportation cost</h2>
+      </div>
+    </md-toolbar>
+

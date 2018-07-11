@@ -1,0 +1,42 @@
+
+<md-toolbar class="md-hue-2">
+	<div class="md-toolbar-tools">
+	<h2 flex md-truncate>Lista jedinica mere</h2>    
+	
+	<md-button ng-if="authService.isAdmin()" class="md-warn" aria-label="stopa" ng-click="dodajJedinicu()">Dodaj jedinicu
+	
+    </md-button>
+    
+	</div>
+</md-toolbar>
+
+
+<md-content>
+<md-table-container>
+  <table md-table md-row-select ng-model="selectedJedinica">
+    <thead md-head md-order="myOrder" >
+      <tr md-row>
+        <th md-column>Oznaka jedinice</th>
+         <th md-column>Naziv jedinice</th>
+         <th md-column ng-if="authService.isAdmin()">Obrisi</th>
+        <th md-column ng-if="authService.isAdmin()">Izmeni</th>
+      </tr>
+    </thead>
+    <tbody md-body>
+      <tr md-row md-select="jedinica" md-select-id="name" md-on-select="onSelectJedinica()" md-auto-select ng-repeat="jedinica in jedinice | orderBy: myOrder | limitTo: query.limit: (query.page - 1) * query.limit">
+        <td md-cell>{{jedinica.oznakaJedinice}}</td>
+        <td md-cell>{{jedinica.nazivJedinice}}</td>
+          <td md-cell ng-if="authService.isAdmin()"><md-button class="md-warn" aria-label="jedinica" ng-click="obrisiJedinicu(jedinica)">obrisi
+    </md-button>
+    </td>
+    <td md-cell ng-if="authService.isAdmin()"><md-button class="md-warn" aria-label="jedinica" ng-click="izmeniJedinicu(jedinica)">izmeni
+    </md-button></td>
+      </tr>
+    </tbody>
+  </table>  
+</md-table-container>	
+<md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{jediniceSize}}" md-page-select="options.pageSelector" md-boundary-links="options.boundaryLinks"></md-table-pagination>
+</md-content>
+
+<md-button class="md-warn" aria-label="home" ng-click="goToHome()">idi na pocetnu
+    </md-button>

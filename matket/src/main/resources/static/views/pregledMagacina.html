@@ -1,0 +1,138 @@
+<md-toolbar class="md-hue-2">
+	<div class="md-toolbar-tools">
+	<h2 flex md-truncate>Magacini</h2>
+	<md-button class="md-icon-button" aria-label="Pretrazi">
+        <ng-md-icon icon="search" style="fill: white" size="24"></ng-md-icon> 
+    </md-button>
+    <input ng-model="sifraZaPretragu" ng-change="pretraziPoSifri()" placeholder="Unesite sifru"> 
+</div>
+</md-toolbar>
+
+<md-content>
+<md-table-container>
+  <table md-table md-row-select  ng-model="selected">
+    <thead md-head md-order="myOrder">
+      <tr md-row>
+        <th md-column>Sifra</th>
+        <th md-column>Naziv</th>
+        <th md-column>Preduzece</th>
+        <th md-column>Izvestaj</th>
+      </tr>
+    </thead>
+    <tbody md-body>
+      <tr md-row md-select="item" md-on-select="onSelectEvent()" md-select-id="name"  md-auto-select ng-repeat="item in items | orderBy: myOrder | limitTo: query.limit: (query.page - 1) * query.limit" >
+        <td md-cell>{{item.sifra}}</td>
+        <td md-cell>{{item.naziv}}</td>
+        <td md-cell>{{item.preduzece.name}}</td>    
+        <td md-cell><md-button class="md-raised md-primary" ng-click="lager(item.sifra, item.preduzece.id)">Lager</md-button></td> 	
+      </tr>
+    </tbody>
+  </table>  
+</md-table-container>	
+<md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="8" md-page-select="options.pageSelector" md-boundary-links="options.boundaryLinks"></md-table-pagination>
+</md-content>
+
+<md-toolbar class="md-hue-2">
+	<div class="md-toolbar-tools">
+	<h2 flex md-truncate>Detalji</h2>
+	</div>
+</md-toolbar>
+<md-content>
+<form name="magacinForm">
+	<div layout="row">
+		<md-input-container>
+			<label>Sifra</label>
+			<input type="text" required ng-model="sifraMagacina">
+		</md-input-container>
+		
+		<md-input-container>
+			<label>Naziv</label>
+			<input type="text" required ng-model="nazivMagacina">
+		</md-input-container>
+		
+		<div layout="column">
+			<md-button class="md-raised md-second" ng-click="obrisiMagacin()">Obrisi</md-button>
+		</div>
+	</div>
+</form>
+</md-content>
+
+<div ng-show="vidiKartice">
+	<md-toolbar class="md-hue-2">
+		<div class="md-toolbar-tools">
+		<h2 flex md-truncate>Magacinske kartice</h2>
+	</div>
+	</md-toolbar>
+	
+	<md-content>
+	<md-table-container>
+	  <table md-table md-row-select  ng-model="selectedMK">
+	    <thead md-head md-order="myOrder">
+	      <tr md-row>
+	      	<th md-column>Sifra artikla</th>
+	        <th md-column>Artikl</th>
+	        <th md-column md-numeric>Poc. st. kol.</th>
+	        <th md-column md-numeric>Poc. st. vredn.</th>
+	        <th md-column md-numeric>Pro. ul. kol.</th>
+	        <th md-column md-numeric>Pro. ul. vredn.</th>
+	        <th md-column md-numeric>Pro. izl. kol.</th>
+	        <th md-column md-numeric>Pro. izl. vredn.</th>
+	        <th md-column md-numeric>Uk. kol.</th>
+	        <th md-column md-numeric>Uk. vredn.</th>
+	        <th md-column>Izvestaj</th>
+	      </tr>
+	    </thead>
+	    <tbody md-body>
+	      <tr md-row md-select="kartica" md-on-select="onSelectKartica()" md-select-id="name"  md-auto-select ng-repeat="kartica in kartice | orderBy: myOrder | limitTo: query.limit: (query.page - 1) * query.limit" >
+	        <td md-cell>{{kartica.artikal.sifra}}</td>
+	        <td md-cell>{{kartica.artikal.naziv}}</td>
+	        <td md-cell>{{kartica.pocStanjeKol}}</td>
+	        <td md-cell>{{kartica.pocStanjeVred}}</td>
+	        <td md-cell>{{kartica.prometUlKol}}</td>
+	        <td md-cell>{{kartica.prometUlVred}}</td>
+	        <td md-cell>{{kartica.prometIzKol}}</td>
+	        <td md-cell>{{kartica.prometIzVred}}</td>  
+	        <td md-cell>{{kartica.pocStanjeKol + kartica.prometUlKol - kartica.prometIzKol}}</td>
+	        <td md-cell>{{kartica.pocStanjeVred + kartica.prometUlVred - kartica.prometIzVred}}</td> 
+	        <td md-cell><md-button class="md-raised md-primary" ng-click="magacinskaKartica(kartica.id)">Magacinska kartica</md-button></td> 	
+	      </tr>
+	    </tbody>
+	  </table>  
+	</md-table-container>	
+	<md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="8" md-page-select="options.pageSelector" md-boundary-links="options.boundaryLinks"></md-table-pagination>
+	</md-content>
+</div>
+
+<div ng-show="vidiAnalitike">
+	<md-toolbar class="md-hue-2">
+		<div class="md-toolbar-tools">
+		<h2 flex md-truncate>Analitike magacinske kartice</h2>
+	</div>
+	</md-toolbar>
+
+	<md-content>
+	<md-table-container>
+	  <table md-table md-row-select  ng-model="selectedAnalitika">
+	    <thead md-head md-order="myOrder">
+	      <tr md-row>
+	        <th md-column>Smer</th>
+	        <th md-column>Vrsta prometa</th>
+	        <th md-column md-numeric>Kolicina</th>
+	        <th md-column md-numeric>Cena</th>
+	        <th md-column md-numeric>Vrednost</th>
+	      </tr>
+	    </thead>
+	    <tbody md-body>
+	      <tr md-row md-select="analitika" md-on-select="" md-select-id="name"  md-auto-select ng-repeat="analitika in analitike | orderBy: myOrder | limitTo: query.limit: (query.page - 1) * query.limit" >
+	        <td md-cell>{{analitika.smer}}</td>
+	        <td md-cell>{{analitika.vrstaPrometa}}</td>
+	        <td md-cell>{{analitika.stavkaDokumenta.kolicina}}</td>
+	        <td md-cell>{{analitika.stavkaDokumenta.cena}}</td>
+	        <td md-cell>{{analitika.stavkaDokumenta.kolicina * analitika.stavkaDokumenta.cena}}</td>
+	      </tr>
+	    </tbody>
+	  </table>  
+	</md-table-container>	
+	<md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="8" md-page-select="options.pageSelector" md-boundary-links="options.boundaryLinks"></md-table-pagination>
+	</md-content>
+</div>

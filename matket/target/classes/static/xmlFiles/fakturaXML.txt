@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<fakturaXML xmlns="http://www.ftn.uns.ac.rs/fakturisanje/models" naziv="testNaziv" brojDokumenta="4" statusDokumenta="poslata" datumDokumenta="2017-06-15" datumValute="2017-07-15" ukupnoZaPlacanje="1588.66">
+    <izdavaocRacuna name="Atos" pib="1000000033" mbr="12345333" account="898888888888883333"/>
+    <kupac name="Sunoko" pib="1000000000" mbr="12345677" account="898888888888888888"/>
+    <stavke/>
+</fakturaXML>
